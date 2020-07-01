@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -41,5 +44,20 @@ public class MainActivity extends AppCompatActivity {
     public void goToVideos() {
         Intent goToVideosIntent = new Intent(MainActivity.this, VideosActivity.class);
         startActivity(goToVideosIntent);
+    }
+
+    public void logOutUser(View view) {
+        FirebaseAuth.getInstance().signOut();
+        updateUi(null);
+    }
+
+    private void updateUi(FirebaseUser user) {
+        if (user != null) {
+            //neccessary ui updates
+        } else {
+            Intent logOutUser = new Intent(MainActivity.this,Login.class);
+            startActivity(logOutUser);
+            finish();
+        }
     }
 }
