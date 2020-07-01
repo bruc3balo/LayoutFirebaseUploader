@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/dresscode</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="primaryTextColor">#CB0F0707</color>
+    <color name="dresscode">#FBDB3D</color>
+    <color name="snow">#C3FFFFFF</color>
+
+    <!--tabcolors -->
+    <color name="mtaatab">#DBBD2E</color>
+    <color name="eventstab">#C5A716</color>
+    <color name="shoptab">#9E860F</color>
+    <color name="messagetab">#705E0D</color>
+
+    <!--icon colors -->
+    <color name="mtaaicon">#0E0D0D</color>
+    <color name="eventsicon">#E62525</color>
+    <color name="shopicon">#302D2D</color>
+    <color name="messageicon">#250A31</color>
+
+    <!--indicator colors -->
+    <color name="mtaaind">#680E0D0D</color>
+    <color name="eventsind">#56630808</color>
+    <color name="shopind">#51302D2D</color>
+    <color name="messageind">#48250A31</color>
+
+    <!-- post colors-->
+    <color name="shadow">#3D3301</color>
+
+    <!-- message -->
+    <color name="white">#EEE8E8</color>
+    <color name="colorPrimaryVDark">#999595</color>
+    <color name="semiBlack">#68000000</color>
+    <color name="semiWhite">#61FFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="niceBlue">#5CE7DB</color>
+    <color name="superNiceDarkBlue">#CE0A0611</color>
+    <color name="tbBlue">#B00E2531</color>
+    <color name="black">#000000</color>
+</resources>

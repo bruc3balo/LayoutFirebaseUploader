@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="#BA4A3737"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/addVideo"
+        android:elevation="12dp"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:src="@android:drawable/ic_input_add"
+        android:padding="4dp"
+        android:background="#4BFFFFFF"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="2.5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <ImageView
+        android:id="@+id/showVideo"
+        android:elevation="12dp"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="#4BFFFFFF"
+        android:src="@android:drawable/presence_video_online"
+        android:padding="4dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="2.5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        tools:ignore="OnClick" />
+
+</LinearLayout>
