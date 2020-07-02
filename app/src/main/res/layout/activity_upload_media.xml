@@ -115,19 +115,20 @@
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="center"
-            android:text="Post"
-            android:textColor="#000000"
-            android:background="@color/colorAccent"
-            android:layout_margin="5dp"
-            android:elevation="12dp"/>
+    <Button
+        android:onClick="pushVideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="5dp"
+        android:background="@color/colorAccent"
+        android:elevation="12dp"
+        android:gravity="center"
+        android:text="Post"
+        android:textColor="#000000" />
 
 
-    </LinearLayout>
+</LinearLayout>
 <!--
 
 </ScrollView>-->

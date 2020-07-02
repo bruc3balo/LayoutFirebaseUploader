@@ -1,7 +1,10 @@
 package com.example.videoimageupload;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -10,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +25,14 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.videoimageupload.adapters.ControlGridAdapter;
 import com.example.videoimageupload.adapters.SliderAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class VideosActivity extends AppCompatActivity {
     ViewPager2 viewPager2;
@@ -33,6 +43,9 @@ public class VideosActivity extends AppCompatActivity {
     Integer[] colors = new Integer[]{R.color.dresscode,R.color.eventsicon,R.color.mtaaicon,R.color.semiBlack,R.color.tbBlue,R.color.niceBlue};
 
     private int [] control_ops = new int[]{R.drawable.pause,R.drawable.play,R.drawable.forward,R.drawable.ic_stop_svgrepo_com};
+
+    private StorageReference downloadUploadReference;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +133,12 @@ public class VideosActivity extends AppCompatActivity {
         });
         controlGrid.setAdapter(controlGridAdapter);
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getVideos();
+            }
+        },5000);
 
     }
 
@@ -132,4 +151,83 @@ public class VideosActivity extends AppCompatActivity {
         }
     }
 
+
+    private void getVideos() {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final StorageReference storageRef = storage.getReference();
+        storageRef.child("quick amaru.mp4").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                Dialog dialog = new Dialog(VideosActivity.this);
+                dialog.setContentView(R.layout.video_downloaded);
+
+                final VideoView videoView = dialog.findViewById(R.id.downloadedVideoView);
+                dialog.show();
+
+
+                downloadUploadReference = storageRef.child("quick amaru.mp4");
+
+                videoView.setVideoURI(uri);
+                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        videoView.start();
+                    }
+                });
+            }
+                 }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+                System.out.println(exception.toString());
+            }
+        });
+
+
+    }
+
+    public void pullVideos(View view) {
+        getVideos();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // If there's a download in progress, save the reference so you can query it later
+        if (downloadUploadReference != null) {
+            outState.putString("reference", downloadUploadReference.toString());
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // If there was a download in progress, get its reference and create a new StorageReference
+        final String stringRef = savedInstanceState.getString("reference");
+        if (stringRef == null) {
+            return;
+        }
+
+        downloadUploadReference = FirebaseStorage.getInstance().getReferenceFromUrl(stringRef);
+
+        // Find all DownloadTasks under this StorageReference (in this example, there should be one)
+        List<FileDownloadTask> tasks = downloadUploadReference.getActiveDownloadTasks();
+        if (tasks.size() > 0) {
+            // Get the task monitoring the download
+            FileDownloadTask task = tasks.get(0);
+
+            // Add new listeners to the task using an Activity scope
+            task.addOnSuccessListener(this, new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot state) {
+                    // Success!
+                    // ...
+                    System.out.println("Download finished");
+                }
+            });
+        }
+    }
 }
